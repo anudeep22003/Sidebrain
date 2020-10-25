@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Colors, Typography, Strings, Spacing} from '../styles'
 import {Button} from 'react-native-elements'
+import {SignInButton} from '../components'
 
 
 const {FONT_BOLD, FONT_REGULAR, FONT_SEMIBOLD,FONT_SIZE} = Typography
@@ -15,6 +16,13 @@ class Login extends Component {
     this.state = {};
   }
 
+  loginWithProvider = (provider) => Auth.federatedSignIn({provider: provider })
+
+  withOAuth = ({oAuthUser,authState,oAuthError}) => {
+    if (authState === "loading" || authState === "verifyContact"){
+      return (<ActivityIndicator color={'#000000'} />)
+    }
+  }
   
   render() {
     const {headerStyle, onboardingTextStyle, onboardingDescTextStyle, buttonContainerStyle, buttonTitleStyle} = styles
@@ -30,14 +38,7 @@ class Login extends Component {
         <Text style={onboardingTextStyle} >{ADD_CONTENT_ON_GO}</Text>
         <Text style={onboardingDescTextStyle} >{OB1_DESC}</Text>
 
-        <Button
-          onPress={() => this.props.navigation.navigate('Profile')}
-          containerStyle={buttonContainerStyle}
-          buttonStyle={{backgroundColor: BLACK}}
-          title={'Sign in with Apple'}
-          titleStyle={buttonTitleStyle}
-          icon={{type: 'font-awesome', name: 'apple', color: WHITE, size: SIZE_20}}
-        />
+        <SignInButton />
       </View>
     )
   }
