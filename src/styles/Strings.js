@@ -7,7 +7,15 @@ const Strings = {
     ADDRESS: 'Address',
     EMAIL: 'Email',
     SAVE: 'Save',
-    SEARCH: 'Search'
+    SEARCH: 'Search',
+    SIGN_IN_WITH_APPLE: 'Sign in with Apple',
+    LINK: 'link',
+    TEXT: 'text',
+    AUDIO: 'audio',
+    IMAGE: 'image',
+    VIDEO: 'video',
+    EDIT: 'Edit',
+    DELETE: 'Delete',
 }
 
 export {Strings}

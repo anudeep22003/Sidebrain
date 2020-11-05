@@ -1,33 +1,24 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Colors, Typography, Strings, Spacing} from '../styles'
-import {Button} from 'react-native-elements'
 import {SignInButton} from '../components'
-
+import {Button} from '../components'
 
 const {FONT_BOLD, FONT_REGULAR, FONT_SEMIBOLD,FONT_SIZE} = Typography
 const {BLACK, WHITE} = Colors
 const {SIZE_7, SIZE_10, SIZE_20, SIZE_40, SIZE_200} = Spacing
-const {WELCOME_TO_SIDEBRIAN, SIDEBRIAN, ADD_CONTENT_ON_GO, OB1_DESC} = Strings
+const {WELCOME_TO_SIDEBRIAN, SIDEBRIAN, ADD_CONTENT_ON_GO, OB1_DESC, SIGN_IN_WITH_APPLE} = Strings
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {};
   }
-
-  loginWithProvider = (provider) => Auth.federatedSignIn({provider: provider })
-
-  withOAuth = ({oAuthUser,authState,oAuthError}) => {
-    if (authState === "loading" || authState === "verifyContact"){
-      return (<ActivityIndicator color={'#000000'} />)
-    }
-  }
   
   render() {
-    const {headerStyle, onboardingTextStyle, onboardingDescTextStyle, buttonContainerStyle, buttonTitleStyle} = styles
+    const {headerStyle, onboardingTextStyle, onboardingDescTextStyle} = styles
     return (
-      <View style={{flex: 1, marginTop: SIZE_20}}>
+      <View style={{flex: 1, paddingTop: SIZE_20, backgroundColor: WHITE}}>
         <Text style={headerStyle} >{WELCOME_TO_SIDEBRIAN}</Text>
         <Text style={headerStyle} >{SIDEBRIAN}</Text>
 
@@ -38,7 +29,12 @@ class Login extends Component {
         <Text style={onboardingTextStyle} >{ADD_CONTENT_ON_GO}</Text>
         <Text style={onboardingDescTextStyle} >{OB1_DESC}</Text>
 
-        <SignInButton />
+        <Button
+          containerStyle={{marginTop: SIZE_40, width: 200}} 
+          onPress={() => this.props.navigation.navigate('Chat')}
+          title={SIGN_IN_WITH_APPLE}
+          icon={{type: 'font-awesome', name: 'apple', color: WHITE, size: SIZE_20, iconStyle: {marginEnd: SIZE_10}}}
+        />
       </View>
     )
   }
@@ -63,17 +59,6 @@ const styles = StyleSheet.create({
     marginTop: SIZE_10,
     marginStart: SIZE_20,
     marginEnd: SIZE_20
-  },
-  buttonContainerStyle: {
-    marginTop: SIZE_40,
-    width: SIZE_200,
-    alignSelf: 'center',
-    borderRadius: SIZE_7
-  },
-  buttonTitleStyle: {
-    ...FONT_REGULAR,
-    fontSize: FONT_SIZE.FONT_SIZE_18,
-    marginStart: SIZE_10
   }
 })
 

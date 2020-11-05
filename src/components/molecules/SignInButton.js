@@ -17,7 +17,7 @@ import awsmobile from '../../aws-export';
 import {Button} from 'react-native-elements'
 import {Colors, Typography, Strings, Spacing} from '../../styles'
 
-const {WHITE, BLACK} = Colors
+const {WHITE, BLACK, LIGHT_GREY} = Colors
 const {SIZE_7, SIZE_10, SIZE_20, SIZE_40, SIZE_200} = Spacing
 const {FONT_REGULAR, FONT_SIZE} = Typography
 
@@ -61,7 +61,7 @@ const SocialIcon = withOAuth(({oAuthUser, authState, oAuthError}) => {
 
   return (
     <>
-      <View style={{flex: 1, width: '100%'}}>
+      <View style={{width: '100%'}}>
         <View style={{justifyContent: 'center', flexDirection: 'row'}}>
             <Button
                 onPress={() => loginWithProvider('SignInWithApple')}

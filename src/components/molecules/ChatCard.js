@@ -1,56 +1,198 @@
-import React from 'react'
-import {View, Text, StyleSheet, Image} from 'react-native'
-import { Icon } from 'react-native-elements'
+import React, {useEffect, useState, PureComponent} from 'react'
+import {View, Text, StyleSheet, Image, Alert} from 'react-native'
+import {getLinkPreview} from 'link-preview-js';
+import {Typography, Spacing, Colors, Styles, Strings} from '../../styles'
+import {
+    Menu,
+    MenuOptions,
+    MenuOption,
+    MenuTrigger,
+} from 'react-native-popup-menu';
+import {NamedIcon} from '../../components'
+import Video from 'react-native-video';
 
-import {Typography, Spacing, Colors, Styles} from '../../styles'
 
 const {LIGHT_GREY, DARK_GREY} = Colors
 const {SIZE_5, SIZE_10, SIZE_1, SIZE_80, SIZE_20, SIZE_30, SIZE_200, SIZE_25, SIZE_150} = Spacing
 const {FONT_REGULAR, FONT_BOLD} = Typography
+const {LINK, TEXT, AUDIO, IMAGE, VIDEO, EDIT, DELETE} = Strings
 const { 
     dimensions: {width}
 } = Styles
 
-function getCardData(type) {
-    const {waveStyle, textDescriptionStyle, linkStyle, linkTitleStyle} = styles
-    switch(type) {
-        case 1: return <Image 
-                            resizeMode={'contain'}
-                            style={waveStyle}
-                            source={require('../../assets/images/audio_waves.png')} 
-                        />
-        case 2: return <Text style={textDescriptionStyle}>Really good read on why decentralization has the potential to have outsize impacts on the web2.0 larger intenet infrastructure that we have come to rely and depend on. This is an excellent article by Chris Cox, ex CPO Facebook</Text>
-        case 3: return <View>
-                            <Image 
-                                resizeMode={'cover'}
-                                style={[waveStyle, {height: SIZE_150}]}
-                                source={require('../../assets/images/demo_img.png')} 
-                            />
-                            <Text style={linkTitleStyle} >Why Decentralization Matters</Text>
-                            <Text style={linkStyle} >onezero.medium.com</Text>
-                        </View>
+let mMenuRef = ''
+
+
+
+// const ChatCard = React.memo(props => {
+//     const {data} = props
+//     const {data: {coords, uri}, type} = data
+//     const {containerStyle, innerContainerStyle, topContainerStyle, locationTextStyle, waveStyle} = styles
+
+
+//     const [urlMetadata, updateUrlMetadata] = useState({})
+
+    
+    // useEffect(() => {
+    //     type == LINK ? getLinkPreview(uri).then((preview) => {
+    //         console.log({preview});
+    //         updateUrlMetadata(preview)
+    //     }) : false
+    // }, []) 
+    
+
+//     return(
+//         <View style={containerStyle} >
+//             <View style={topContainerStyle} >
+//                 <Image source={require('../../assets/images/location.png')} />
+//             <Text style={locationTextStyle} >{coords}</Text>
+//             </View>
+//             <View style={[innerContainerStyle, (type == AUDIO || type == VIDEO || type == IMAGE) ? {paddingBottom: 30} : {}]} >
+//                 {getCardData(data, urlMetadata)}
+//             </View>
+//             <View style={{position: 'absolute', bottom: type == LINK ? 18 : 12, right: 10}} >
+//                 {renderMenuItem()}
+//             </View>
+//         </View>
+//     )
+
+// })
+
+
+class ChatCard extends PureComponent {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            urlMetadata: {},
+            uuid: ''
+        }
     }
-}
 
-const ChatCard = props => {
-    const {data} = props
 
-    const {containerStyle, innerContainerStyle, topContainerStyle, locationTextStyle, waveStyle} = styles
-    return(
-        <View style={containerStyle} >
-            <View style={topContainerStyle} >
-                <Image source={require('../../assets/images/location.png')} />
-                <Text style={locationTextStyle} >San Francisco, CA</Text>
+    componentDidMount() {
+        this.generateLinkPreview()
+    }
+
+    generateLinkPreview = () => {
+        const {data: {type, data: {uri}}} = this.props
+        type == LINK ? getLinkPreview(uri).then((preview) => {
+            this.setState({urlMetadata: preview})
+        }) : false
+    }
+
+  
+    getCardData(item, {title, url, images}) {
+        const {type, data: {uri}} = item
+        const {waveStyle, textDescriptionStyle, linkStyle, linkTitleStyle} = styles
+        switch(type) {
+            case AUDIO: return <Image 
+                                resizeMode={'contain'}
+                                style={waveStyle}
+                                source={require('../../assets/images/audio_waves.png')} 
+                            />
+            case TEXT: return <Text style={textDescriptionStyle}>{uri}</Text>
+            case LINK: return <View>
+                                <Image 
+                                    resizeMode={'cover'}
+                                    style={[waveStyle, {height: SIZE_150}]}
+                                    source={images ? {uri: images[0]} : require('../../assets/images/demo_img.jpg')} 
+                                />
+                                <Text style={linkTitleStyle} >{title}</Text>
+                                <Text style={linkStyle} >{url}</Text>
+                            </View>
+            case IMAGE: return <View>
+                                <Image 
+                                    resizeMode={'cover'}
+                                    style={[waveStyle, {height: SIZE_150}]}
+                                    source={{uri}} 
+                                />
+                            </View>
+            case VIDEO: return <View>
+                                    <Video
+                                        poster={'https://icon-library.com/images/buffering-icon/buffering-icon-24.jpg'}
+                                        source={{uri}}
+                                        style={[waveStyle, {height: SIZE_150}]}
+                                        resizeMode={'cover'}
+                                        controls
+                                    />
+                                </View>
+        }
+    }
+
+
+    onDeletePress = () => {
+        Alert.alert(
+            'Delete',
+            'Are you sure you want to delete?',
+            [
+              {
+                text: 'Yes',
+                onPress: () => {}
+              },
+              {
+                text: 'No',
+                onPress: () => {},
+                style: 'cancel'
+              },
+            ],
+            { cancelable: false }
+          );
+    }
+
+    renderMenuItem(index) {
+        const {data, onEdit} = this.props
+        const {id, type, data: {uri}} = data
+        return(
+            <Menu ref={(ref) => this.mMenuRef = ref} >
+                <MenuTrigger children={<Image source={require('../../assets/images/options.png')} />} />
+                <MenuOptions>
+                    {
+                        type == LINK || type == TEXT
+                        ? (
+                            <MenuOption value={1}>
+                                <NamedIcon
+                                    onPress={() => {onEdit(id, uri); this.mMenuRef.close()}}
+                                    label={EDIT}
+                                    iconProps={{name: 'edit-2', type: 'feather'}}
+                                />
+                            </MenuOption>
+                        ) : false
+                    }
+                    
+                    <MenuOption value={2}>
+                        <NamedIcon
+                            onPress={() => {this.onDeletePress(); this.mMenuRef.close()}}
+                            label={DELETE}
+                            iconProps={{name: 'delete', type: 'antdesign'}}
+                        />
+                    </MenuOption>
+                </MenuOptions>
+            </Menu>
+        )
+    }
+
+    render() {
+        const {data} = this.props
+        const {data: {coords, uri}, type} = data
+        const {containerStyle, innerContainerStyle, topContainerStyle, locationTextStyle, waveStyle} = styles
+        const {urlMetadata} = this.state
+    
+        return(
+            <View style={containerStyle} >
+                <View style={topContainerStyle} >
+                    <Image source={require('../../assets/images/location.png')} />
+                <Text style={locationTextStyle} >{coords}</Text>
+                </View>
+                <View style={[innerContainerStyle, (type == AUDIO || type == VIDEO || type == IMAGE) ? {paddingBottom: 30} : {}]} >
+                    {this.getCardData(data, urlMetadata)}
+                </View>
+                <View style={{position: 'absolute', bottom: type == LINK ? 18 : 12, right: 10}} >
+                    {this.renderMenuItem()}
+                </View>
             </View>
-            <View style={[innerContainerStyle, data == 1? {paddingBottom: 30} : {}]} >
-                {getCardData(data)}
-            </View>
-            <Image 
-                source={require('../../assets/images/options.png')} 
-                style={{position: 'absolute', bottom: data == 3 ? 18 : 12, right: 10}}
-            />
-        </View>
-    )
+        )
+    }
 
 }
 
