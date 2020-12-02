@@ -1,5 +1,5 @@
 import React, {useEffect, useState, PureComponent} from 'react'
-import {View, Text, StyleSheet, Image, Alert} from 'react-native'
+import {View, Text, StyleSheet, Image, Alert, TouchableOpacity} from 'react-native'
 import {getLinkPreview} from 'link-preview-js';
 import {Typography, Spacing, Colors, Styles, Strings} from '../../styles'
 import {
@@ -10,7 +10,9 @@ import {
 } from 'react-native-popup-menu';
 import {NamedIcon} from '../../components'
 import Video from 'react-native-video';
-
+import WaveForm from 'react-native-audiowaveform';
+import SoundPlayer from 'react-native-sound-player'
+import FastImage from 'react-native-fast-image'
 
 const {LIGHT_GREY, DARK_GREY} = Colors
 const {SIZE_5, SIZE_10, SIZE_1, SIZE_80, SIZE_20, SIZE_30, SIZE_200, SIZE_25, SIZE_150} = Spacing
@@ -58,6 +60,7 @@ let mMenuRef = ''
 
 // })
 
+let isAudioPlaying = true
 
 class ChatCard extends PureComponent {
 
@@ -65,7 +68,7 @@ class ChatCard extends PureComponent {
         super(props)
         this.state = {
             urlMetadata: {},
-            uuid: ''
+            uuid: '',
         }
     }
 
@@ -78,7 +81,18 @@ class ChatCard extends PureComponent {
         const {data: {type, data: {uri}}} = this.props
         type == LINK ? getLinkPreview(uri).then((preview) => {
             this.setState({urlMetadata: preview})
-        }) : false
+        }) : type == AUDIO ? SoundPlayer.loadUrl(uri) : false
+    }
+
+    onPlayPauseAudio = async (uri) => {
+        console.log({uri, isAudioPlaying});
+        try {
+            if(isAudioPlaying) SoundPlayer.play()
+            else SoundPlayer.pause()
+            isAudioPlaying = !isAudioPlaying
+        } catch (e) {
+            console.log(`cannot play the sound file`, e)
+        }
     }
 
   
@@ -86,15 +100,18 @@ class ChatCard extends PureComponent {
         const {type, data: {uri}} = item
         const {waveStyle, textDescriptionStyle, linkStyle, linkTitleStyle} = styles
         switch(type) {
-            case AUDIO: return <Image 
-                                resizeMode={'contain'}
-                                style={waveStyle}
-                                source={require('../../assets/images/audio_waves.png')} 
-                            />
+            case AUDIO: return <TouchableOpacity onPress={() => this.onPlayPauseAudio(uri)} >
+                                    <Image 
+                                        resizeMode={'contain'}
+                                        style={waveStyle}
+                                        source={require('../../assets/images/audio_waves.png')} 
+                                    />
+                                </TouchableOpacity>
+            // case AUDIO: return <WaveForm style={waveStyle} source={{uri}} waveFormStyle={{waveColor:'red', scrubColor:'white'}} play={true}  />
             case TEXT: return <Text style={textDescriptionStyle}>{uri}</Text>
             case LINK: return <View>
-                                <Image 
-                                    resizeMode={'cover'}
+                                <FastImage 
+                                    resizeMode={FastImage.resizeMode.cover}
                                     style={[waveStyle, {height: SIZE_150}]}
                                     source={images ? {uri: images[0]} : require('../../assets/images/demo_img.jpg')} 
                                 />
@@ -102,8 +119,8 @@ class ChatCard extends PureComponent {
                                 <Text style={linkStyle} >{url}</Text>
                             </View>
             case IMAGE: return <View>
-                                <Image 
-                                    resizeMode={'cover'}
+                                <FastImage 
+                                    resizeMode={FastImage.resizeMode.cover}
                                     style={[waveStyle, {height: SIZE_150}]}
                                     source={{uri}} 
                                 />
@@ -115,20 +132,22 @@ class ChatCard extends PureComponent {
                                         style={[waveStyle, {height: SIZE_150}]}
                                         resizeMode={'cover'}
                                         controls
+                                        autoPlay={false}
                                     />
                                 </View>
         }
     }
 
 
-    onDeletePress = () => {
+    onDeletePress = (id) => {
+        const {onDelete} = this.props
         Alert.alert(
             'Delete',
             'Are you sure you want to delete?',
             [
               {
                 text: 'Yes',
-                onPress: () => {}
+                onPress: () => onDelete(id)
               },
               {
                 text: 'No',
@@ -162,7 +181,7 @@ class ChatCard extends PureComponent {
                     
                     <MenuOption value={2}>
                         <NamedIcon
-                            onPress={() => {this.onDeletePress(); this.mMenuRef.close()}}
+                            onPress={() => {this.onDeletePress(id); this.mMenuRef.close()}}
                             label={DELETE}
                             iconProps={{name: 'delete', type: 'antdesign'}}
                         />

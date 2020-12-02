@@ -30,16 +30,18 @@ Amplify.configure({
     identityPoolId: awsmobile['aws_cognito_identity_pool_id'],
     authenticationFlowType: 'CUSTOM_AUTH',
     oauth: {
-      domain: 'classroomx.auth.ap-south-1.amazoncognito.com',
+      // domain: 'classroomx.auth.ap-south-1.amazoncognito.com',
+      domain: 'sidebrainauth.auth.us-east-2.amazoncognito.com',
       scope: [
+        'name',
         'phone',
         'email',
         'profile',
         'openid',
         'aws.cognito.signin.user.admin',
       ],
-      redirectSignIn: 'classroomx://oauth',
-      redirectSignOut: 'classroomx://signout',
+      redirectSignIn: 'sidebrainappleauth://oauth',
+      redirectSignOut: 'sidebrainappleauth://signout',
       responseType: 'code',
       options: {
         AdvancedSecurityDataCollectionFlag: true,
@@ -49,6 +51,7 @@ Amplify.configure({
 });
 
 const SocialIcon = withOAuth(({oAuthUser, authState, oAuthError}) => {
+  console.log({authState, oAuthUser});
   if (authState === 'loading' || authState === 'verifyContact') {
     return <ActivityIndicator color={'#000000'} />;
   }
@@ -102,4 +105,4 @@ const styles = StyleSheet.create({
     }
   })
 
-export default withAuthenticator(App, false, [<SocialIcon />]);
+export default SocialIcon//withAuthenticator(App, false, [<SocialIcon />]);

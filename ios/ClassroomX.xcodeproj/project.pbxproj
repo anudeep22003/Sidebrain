@@ -17,6 +17,11 @@
 		EB8AB321252D2604002CCA82 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB8AB31D252D2604002CCA82 /* SF-Pro-Display-Medium.otf */; };
 		EB8AB322252D2604002CCA82 /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB8AB31E252D2604002CCA82 /* SF-Pro-Display-Semibold.otf */; };
 		EB8AB323252D2604002CCA82 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB8AB31F252D2604002CCA82 /* SF-Pro-Display-Regular.otf */; };
+		EB91A05F25776E8100557AFA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB91A05E25776E8000557AFA /* GoogleService-Info.plist */; };
+		EB91A100257772D500557AFA /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB91A0FF257772D500557AFA /* File.swift */; };
+		EBB111BD2578496000BE12DA /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB111BC2578496000BE12DA /* ShareViewController.swift */; };
+		EBB111C02578496000BE12DA /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBB111BE2578496000BE12DA /* MainInterface.storyboard */; };
+		EBB111C42578496000BE12DA /* SidebrainShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EBB111BA2578496000BE12DA /* SidebrainShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,7 +32,28 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = ClassroomX;
 		};
+		EBB111C22578496000BE12DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EBB111B92578496000BE12DA;
+			remoteInfo = SidebrainShare;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EBB110AA2578433600BE12DA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EBB111C42578496000BE12DA /* SidebrainShare.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -70,6 +96,15 @@
 		EB8AB31D252D2604002CCA82 /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
 		EB8AB31E252D2604002CCA82 /* SF-Pro-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Semibold.otf"; sourceTree = "<group>"; };
 		EB8AB31F252D2604002CCA82 /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
+		EB91A05E25776E8000557AFA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EB91A0FE257772D500557AFA /* ClassroomX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClassroomX-Bridging-Header.h"; sourceTree = "<group>"; };
+		EB91A0FF257772D500557AFA /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		EBB1110C257844A600BE12DA /* ClassroomX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ClassroomX.entitlements; path = ClassroomX/ClassroomX.entitlements; sourceTree = "<group>"; };
+		EBB111BA2578496000BE12DA /* SidebrainShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SidebrainShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBB111BC2578496000BE12DA /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		EBB111BF2578496000BE12DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		EBB111C12578496000BE12DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBB111CB25784A3C00BE12DA /* SidebrainShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SidebrainShare.entitlements; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -87,6 +122,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D02549624EBB6BC6F31F4E9 /* libPods-ClassroomX.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB111B72578496000BE12DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +155,8 @@
 		13B07FAE1A68108700A75B9A /* ClassroomX */ = {
 			isa = PBXGroup;
 			children = (
+				EBB1110C257844A600BE12DA /* ClassroomX.entitlements */,
+				EB91A05E25776E8000557AFA /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -120,6 +164,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				EB91A0FF257772D500557AFA /* File.swift */,
+				EB91A0FE257772D500557AFA /* ClassroomX-Bridging-Header.h */,
 			);
 			name = ClassroomX;
 			sourceTree = "<group>";
@@ -150,6 +196,7 @@
 				13B07FAE1A68108700A75B9A /* ClassroomX */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ClassroomXTests */,
+				EBB111BB2578496000BE12DA /* SidebrainShare */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				AEAEEFEB1724170312E32D18 /* Pods */,
@@ -164,6 +211,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* ClassroomX.app */,
 				00E356EE1AD99517003FC87E /* ClassroomXTests.xctest */,
+				EBB111BA2578496000BE12DA /* SidebrainShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,6 +256,17 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		EBB111BB2578496000BE12DA /* SidebrainShare */ = {
+			isa = PBXGroup;
+			children = (
+				EBB111CB25784A3C00BE12DA /* SidebrainShare.entitlements */,
+				EBB111BC2578496000BE12DA /* ShareViewController.swift */,
+				EBB111BE2578496000BE12DA /* MainInterface.storyboard */,
+				EBB111C12578496000BE12DA /* Info.plist */,
+			);
+			path = SidebrainShare;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -240,15 +299,34 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E407C6BA5016C0926B626FFD /* [CP] Copy Pods Resources */,
+				EBB110AA2578433600BE12DA /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EBB111C32578496000BE12DA /* PBXTargetDependency */,
 			);
 			name = ClassroomX;
 			productName = ClassroomX;
 			productReference = 13B07F961A680F5B00A75B9A /* ClassroomX.app */;
 			productType = "com.apple.product-type.application";
+		};
+		EBB111B92578496000BE12DA /* SidebrainShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBB111C72578496000BE12DA /* Build configuration list for PBXNativeTarget "SidebrainShare" */;
+			buildPhases = (
+				EBB111B62578496000BE12DA /* Sources */,
+				EBB111B72578496000BE12DA /* Frameworks */,
+				EBB111B82578496000BE12DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SidebrainShare;
+			productName = SidebrainShare;
+			productReference = EBB111BA2578496000BE12DA /* SidebrainShare.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -256,6 +334,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -263,7 +342,13 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						DevelopmentTeam = WQ9D657FLT;
+						LastSwiftMigration = 1220;
+					};
+					EBB111B92578496000BE12DA = {
+						CreatedOnToolsVersion = 12.2;
+						DevelopmentTeam = WQ9D657FLT;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -282,6 +367,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* ClassroomX */,
 				00E356ED1AD99517003FC87E /* ClassroomXTests */,
+				EBB111B92578496000BE12DA /* SidebrainShare */,
 			);
 		};
 /* End PBXProject section */
@@ -304,6 +390,15 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				EB8AB323252D2604002CCA82 /* SF-Pro-Display-Regular.otf in Resources */,
 				EB8AB320252D2604002CCA82 /* SF-Pro-Display-Bold.otf in Resources */,
+				EB91A05F25776E8100557AFA /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB111B82578496000BE12DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBB111C02578496000BE12DA /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +426,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ClassroomX/Pods-ClassroomX-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -351,6 +448,8 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
@@ -431,7 +530,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				EB91A100257772D500557AFA /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB111B62578496000BE12DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBB111BD2578496000BE12DA /* ShareViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,12 +551,29 @@
 			target = 13B07F861A680F5B00A75B9A /* ClassroomX */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
+		EBB111C32578496000BE12DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EBB111B92578496000BE12DA /* SidebrainShare */;
+			targetProxy = EBB111C22578496000BE12DA /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EBB111BE2578496000BE12DA /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EBB111BF2578496000BE12DA /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -471,6 +596,7 @@
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = ClassroomXTests/Info.plist;
@@ -491,9 +617,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3FCA563BF5D4F08FDBC3C983 /* Pods-ClassroomX.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ClassroomX/ClassroomX.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WQ9D657FLT;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ClassroomX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -504,6 +633,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.classroomx;
 				PRODUCT_NAME = ClassroomX;
+				SWIFT_OBJC_BRIDGING_HEADER = "ClassroomX-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -514,9 +644,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 520A64CADB023A99E1963A76 /* Pods-ClassroomX.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ClassroomX/ClassroomX.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WQ9D657FLT;
 				INFOPLIST_FILE = ClassroomX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -526,6 +659,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.classroomx;
 				PRODUCT_NAME = ClassroomX;
+				SWIFT_OBJC_BRIDGING_HEADER = "ClassroomX-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -581,8 +715,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -644,6 +776,65 @@
 			};
 			name = Release;
 		};
+		EBB111C52578496000BE12DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = SidebrainShare/SidebrainShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = WQ9D657FLT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SidebrainShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.classroomx.SidebrainShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EBB111C62578496000BE12DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = SidebrainShare/SidebrainShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = WQ9D657FLT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SidebrainShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.classroomx.SidebrainShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -670,6 +861,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EBB111C72578496000BE12DA /* Build configuration list for PBXNativeTarget "SidebrainShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBB111C52578496000BE12DA /* Debug */,
+				EBB111C62578496000BE12DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -9,7 +9,6 @@ const {FONT_REGULAR, FONT_SIZE} = Typography
 
 export const Button = props => {
   const {
-    onPress,
     containerStyle: _containerStyle,
     titleStyle: _titleStyle,
   } = props;
@@ -19,7 +18,6 @@ export const Button = props => {
   return (
     <_Button
       {...props}
-      onPress={onPress}
       containerStyle={[containerStyle, _containerStyle]}
       buttonStyle={{backgroundColor: BLACK}}
       titleStyle={[titleStyle, _titleStyle]}

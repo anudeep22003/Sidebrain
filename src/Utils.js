@@ -31,27 +31,28 @@ class Utils {
       return {...mHeader, ...data}
     }
 
+    static getUserToken() {
+      return global[X_CUSTOM_HEADER]
+    }
+
     static numberRange(start, end) {
       return new Array(end - start).fill().map((d, i) => i + start);
     }
 
     static async processResponse(response) {      
-        const {code: status, msg: message, token, data} = response
-        if(token){          
-          const {name, email, user_id} = data
+        const {code: status, msg: message, data} = response
+        if(data && data.token){          
+          const {name, email, token} = data
           global[X_CUSTOM_HEADER] = token
           global[USER_NAME] = name
           global[USER_EMAIL] = email
-          global[USER_ID] = user_id
-          global[REF] = `${REF}/${user_id}`
           await AsyncStorage.setItem(X_CUSTOM_HEADER, token)
           await AsyncStorage.setItem(IS_LOGIN, "true")
           await AsyncStorage.setItem(USER_NAME, name)
           await AsyncStorage.setItem(USER_EMAIL, email)
-          await AsyncStorage.setItem(USER_ID, user_id)
         } 
 
-        if(status == '0')
+        if(status == 'failure')
             return {status: false, message}
 
         return {status: true, data}

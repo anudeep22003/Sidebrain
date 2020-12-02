@@ -1,0 +1,8 @@
+export const S3_BASE_URL = 'https://sidebrain.s3.us-east-2.amazonaws.com'
+export const LOCAL_BASE_URL = 'http://localhost:3000/'
+export const PRODUCTION_BASE_URL = ''
+export const SIGNIN = 'auth'
+export const USER_SIDEBRAIN = '/'
+export const UPLOAD_USER_SIDEBRAIN = 'upload'
+export const EDIT_SIDEBRAIN = 'edit'
+export const DELETE_SIDEBRAIN = 'delete'

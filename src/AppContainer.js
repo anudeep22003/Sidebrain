@@ -15,8 +15,9 @@ import DropdownAlert from 'react-native-dropdownalert';
 import DropDownService from './DropDownService'
 import Navigation from './navigations'
 
-const {WHITE} = Colors;
+const {WHITE, BLACK} = Colors;
 const {width, height} = Dimensions.get('window');
+const {FONT_SEMIBOLD} = Typography
 
 class App extends Component {
 
@@ -44,11 +45,14 @@ class App extends Component {
 
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: WHITE}}>
-        {/* <StatusBar backgroundColor={statusColor} barStyle="light-content" />
+        {/* <StatusBar backgroundColor={statusColor} barStyle="light-content" /> */}
         <DropdownAlert 
           ref={ref => DropDownService.setDropDownAlert(ref)} 
-          
-        /> */}
+          tapToCloseEnabled
+          titleStyle={{...FONT_SEMIBOLD, color: WHITE}}
+          messageStyle={{...FONT_SEMIBOLD, color: WHITE}}
+          inactiveStatusBarBackgroundColor={BLACK}
+        />
         <Navigation />
         {/* {loadingStatus ? this.showSpinner() : false} */}
       </SafeAreaView>

@@ -1,25 +1,33 @@
 import React, {Component} from 'react';
 import {View, FlatList, StyleSheet, Image, TextInput, TouchableWithoutFeedback, KeyboardAvoidingView, Platform} from 'react-native';
-import {Spacing, Typography, Colors, Strings} from '../styles'
 import { SearchBar, ButtonGroup } from 'react-native-elements';
 import { MenuProvider } from 'react-native-popup-menu';
-import {ChatCard} from '../components'
 import VideoRecorder from 'react-native-beautiful-video-recorder';
 import UUIDGenerator from 'react-native-uuid-generator';
 import Geolocation from 'react-native-geolocation-service';
+import ReceiveSharingIntent from 'react-native-receive-sharing-intent';
+
+import DropDownService from '../DropDownService'
+import {ChatCard} from '../components'
+import {Spacing, Typography, Colors, Strings} from '../styles'
+import {Webservices} from '../services'
+import Utils from '../Utils'
 
 const {FONT_SIZE, FONT_REGULAR} = Typography
 const {SIZE_1, SIZE_2, SIZE_5, SIZE_10, SIZE_50, SIZE_55, SIZE_20, SIZE_30} = Spacing
 const { LIGHT_GREY, WHITE, BLACK, DARK_GREY } = Colors
-const { SEARCH, LINK, TEXT, AUDIO, IMAGE, VIDEO } = Strings
+const { 
+  SEARCH, 
+  LINK, 
+  TEXT, 
+  AUDIO, 
+  IMAGE, 
+  VIDEO,
+  ERROR,
+  ERROR_MESSAGE
+} = Strings
 
-const mSampleData = [
-  {id: '110ebc93-465c-4449-b4cf-967215efc5f5', type: VIDEO, data: {uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', coords: 'Patna, Bihar'}},
-  {id: 'd212fbde-56be-4d90-b7f3-2cf70a2c497c', type: LINK, data: {uri: 'http://codebuckets.in/', coords: 'Patna, Bihar'}},
-  {id: '2e164721-76c8-44e8-af29-14994f13e0db', type: TEXT, data: {uri: 'Really good read on why decentralization has the potential to have outsize impacts on the web2.0 larger intenet infrastructure that we have come to rely and depend on. This is an excellent article by Chris Cox, ex CPO Facebook', coords: 'San Francisco, CA'}},
-  {id: 'b209e87a-a744-4f0b-99e1-b000b95478e8', type: AUDIO, data: {uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', coords: 'Mumbai, Maharashtra'}},
-  {id: '7f1b25be-7d2f-4d6c-9690-067f6aed5c9e', type: IMAGE, data: {uri: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png', coords: 'Srinagar, J&K'}},
-]
+
 const mUrlRegex = new RegExp(
   "(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))"
  ,"g"
@@ -30,45 +38,84 @@ class Chat extends Component {
   constructor() {
     super();
     this.state = {
-        data: mSampleData,
+        data: [],
         selectedIndex: 1,
         showSearch: false,
         text: '',
         uuid: '',
-        selectedIdToEdit: ''
+        selectedIdToEdit: '',
+        searchText: '',
+        mFilterData: []
     };
   }
 
   componentDidMount() {
     this.generateUUID()
     this.getLocationPermissions()
+    this.getUserSidebrain()
+    this.receiveSharedFiles()
+  }
+
+  componentWillUnmount() {
+    ReceiveSharingIntent.clearReceivedFiles();
+  }
+  
+ 
+  receiveSharedFiles = () => {
+    ReceiveSharingIntent.getReceivedFiles(files => {
+      const {filePath, text, weblink} = files[0]
+      const [type, uri] = text ? [TEXT, text] : weblink ? [LINK, weblink] : [IMAGE, filePath]
+      console.log({type, uri});
+      ReceiveSharingIntent.clearReceivedFiles();
+      this.onDataAdded(type, uri)
+    }, 
+    (error) =>{
+      DropDownService.alert('error', ERROR, ERROR_MESSAGE)
+    });
+  }
+
+  getUserSidebrain = async () => {
+    try {
+      const {data: response} = await Webservices.getUserSidebrain()
+      const {status, message, data} = await Utils.processResponse(response)
+      if(!status) DropDownService.alert('error', ERROR, message)
+      else this.setState({data, mFilterData: data})
+    } catch(err) {
+      DropDownService.alert('error', ERROR, ERROR_MESSAGE)
+    }
   }
 
   async getLocationPermissions() {
     if(Platform.OS == 'ios') {
       const data = await Geolocation.requestAuthorization("whenInUse")
-      console.log({data});
     }
   }
 
   getCoordinates = async () => {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       Geolocation.getCurrentPosition(
-        (position) => {
-          console.log({position});
-          resolve(position)
-        },
-        (error) => {
-          console.log({error});
-          reject(error)
-        },
-        {  }
-    );
+          (position) => {
+            resolve(position)
+          },
+          (error) => {
+            console.log({error});
+            reject(error)
+          },
+          { enableHighAccuracy: true }
+      );
     })
   }
 
+  onDelete = (id) => {
+    const {data} = this.state
+    const mIndex = data.findIndex((v) => v.id === id)
+    data.splice(mIndex, 1)
+    this.setState({data})
+    this.deleteSidebrain(id)
+  }
+
   renderItem = ({item, index}) => {
-      return <ChatCard data={item} onEdit={this.onTextOrLinkEdited} />
+      return <ChatCard data={item} onEdit={this.onEdit} onDelete={this.onDelete} />
   }
 
   generateUUID = () => {
@@ -77,32 +124,75 @@ class Chat extends Component {
     });
   }
 
-
-  onDataAdded = async () => {
+  onDataAdded = async (mType, mUri) => {
     const {data, text, uuid, selectedIdToEdit} = this.state
-    await this.getCoordinates()
-    if(text.length == 0) return
-    const mUrls = text.match(mUrlRegex)
+    const {coords: {latitude, longitude}} = await this.getCoordinates()
+    if(!mUri && text.length == 0) return
+
+    const mUrls = text ? text.match(mUrlRegex) : null
+    const sidebrainType = mType ? mType : mUrls ? LINK : TEXT
     const mData = {
-      data: {uri: text, coords: 'San Francisco, CA'},
-      type: mUrls ? LINK : TEXT,
+      data: {uri: mUri ? mUri : text, coords: `${latitude} , ${longitude}`},
+      type: sidebrainType,
       id: uuid
     }
-    if(selectedIdToEdit.length == 0) data.unshift(mData)
+    if(selectedIdToEdit.length == 0) {
+      data.unshift(mData)
+      this.saveSidebrain(mData)
+    }
     else {
       const mIndex = data.findIndex((v) => v.id === selectedIdToEdit)
       data[mIndex] = mData
+      this.editSidebrain()
     }
     this.setState({data, text: ''}, this.generateUUID)
   }
 
+  editSidebrain = async () => {
+    const {selectedIdToEdit, text} = this.state
+    try {
+      const {data: response} = await Webservices.editUserSidebrain({id: selectedIdToEdit, uri: text})
+      const {status, message, data} = await Utils.processResponse(response)
+      if(!status) DropDownService.alert('error', ERROR, message)
+      this.setState({selectedIdToEdit: ''})
+    } catch(err) {
+      DropDownService.alert('error', ERROR, ERROR_MESSAGE)
+    }
+  }
+
+  deleteSidebrain = async (id) => {
+    try {
+      const {data: response} = await Webservices.deleteUserSidebrain({id})
+      const {status, message, data} = await Utils.processResponse(response)
+      if(!status) DropDownService.alert('error', ERROR, message)
+    } catch(err) {
+      DropDownService.alert('error', ERROR, ERROR_MESSAGE)
+    }
+  }
+
+  saveSidebrain = async ({type: sidebrainType, data: {uri, coords}}) => {
+    try {
+      const mCheckIfMultipartRequired = sidebrainType == VIDEO || sidebrainType == IMAGE || sidebrainType == AUDIO
+      const response = await Webservices.uploadSidebrain({mCheckIfMultipartRequired, sidebrainType, coords, uri}) 
+      const {status, message, data} = await Utils.processResponse(response)
+      if(!status) DropDownService.alert('error', ERROR, message)
+      
+    } catch(err) {
+      console.log({err});
+    }
+  }
+
   cameraStart = () => {
-    this.videoRecorder.open({ maxLength: 30 },(data) => {
-      console.log('captured data', data);
+    this.videoRecorder.open({ maxLength: 30 }, ({uri}) => {
+      this.onDataAdded(VIDEO, uri)
     });
   }
 
-  onTextOrLinkEdited = (id, content) => {
+  onPictureClick = ({uri}) => {
+    this.onDataAdded(IMAGE, uri)
+  }
+
+  onEdit = (id, content) => {
     this.setState({selectedIdToEdit: id, text: content})
   }
 
@@ -134,13 +224,29 @@ class Chat extends Component {
       )
   }
 
+
+  onSearch = (text, selectedIndex) => {
+    const {mFilterData} = this.state
+    const mTempData = []
+
+    mFilterData.map((v) => {
+      const {data: {uri}, type} = v
+      if((uri && uri.includes(text)) && (selectedIndex != 1 ? (selectedIndex == 0 && type == LINK) || (selectedIndex == 2 && type == TEXT) : true)) mTempData.push(v)
+    })
+
+    this.setState({data: mTempData, selectedIndex, searchText: text})
+  }
+
+
   renderHeader = () => {
     const buttons = ['Links', 'All', 'Text']
-    const {selectedIndex} = this.state
+    const {selectedIndex, searchText} = this.state
     const {searchInputContainerStyle, buttonGroupContainerStyle, selectedButtonStyle} = styles
     return (
       <View>
         <SearchBar 
+          value={searchText}
+          onChangeText={(text) => this.onSearch(text, selectedIndex)}
           lightTheme
           containerStyle={{backgroundColor: WHITE, borderWidth: 0}}
           inputContainerStyle={searchInputContainerStyle}
@@ -148,7 +254,7 @@ class Chat extends Component {
           inputStyle={{fontSize: FONT_SIZE.FONT_SIZE_18}}
         />
         <ButtonGroup
-          onPress={(selectedIndex) => this.setState({selectedIndex})}
+          onPress={(selectedIndex) => this.onSearch(searchText, selectedIndex)}
           selectedIndex={selectedIndex}
           buttons={buttons}
           selectedButtonStyle={selectedButtonStyle}
@@ -164,9 +270,9 @@ class Chat extends Component {
   }
 
   renderSearchIcon = () => {
-    const {showSearch} = this.state
+    const {showSearch, mFilterData} = this.state
     return (
-      <TouchableWithoutFeedback onPress={() => this.setState({showSearch: !showSearch})}  >
+      <TouchableWithoutFeedback onPress={() => this.setState({showSearch: !showSearch, data: mFilterData, selectedIndex: 1})}  >
         <View style={{position: 'absolute', right: 15, top: 5}} >
           <Image 
             source={!showSearch ? require('../assets/images/search.png') : require('../assets/images/cross.png')} 
@@ -176,7 +282,7 @@ class Chat extends Component {
       
     )
   }
-  
+
 
   render() {
     const {data, showSearch} = this.state
@@ -200,6 +306,8 @@ class Chat extends Component {
             {this.renderSearchIcon()}
             <VideoRecorder 
               ref={(ref) => { this.videoRecorder = ref; }} 
+              buttonCloseStyle={{position: 'absolute', top: 40, right: 20}}
+              onPictureClick={this.onPictureClick}
             />
         </KeyboardAvoidingView>
     )
