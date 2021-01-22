@@ -6,7 +6,8 @@ import VideoRecorder from 'react-native-beautiful-video-recorder';
 import UUIDGenerator from 'react-native-uuid-generator';
 import Geolocation from 'react-native-geolocation-service';
 import ReceiveSharingIntent from 'react-native-receive-sharing-intent';
-
+// import DraggableFlatList from 'react-native-draggable-dynamic-flatlist'
+import DraggableFlatList from 'react-native-draggable-flatlist'
 import DropDownService from '../DropDownService'
 import {ChatCard} from '../components'
 import {Spacing, Typography, Colors, Strings} from '../styles'
@@ -114,8 +115,10 @@ class Chat extends Component {
     this.deleteSidebrain(id)
   }
 
-  renderItem = ({item, index}) => {
-      return <ChatCard data={item} onEdit={this.onEdit} onDelete={this.onDelete} />
+  renderItem = ({item, index, drag, isActive}) => {
+      return (
+        <ChatCard data={item} onEdit={this.onEdit} onDelete={this.onDelete} move={drag} isActive={isActive} />
+      )
   }
 
   generateUUID = () => {
@@ -294,12 +297,13 @@ class Chat extends Component {
         >
             {showSearch ? this.renderHeader() : false}
               <MenuProvider>
-              <FlatList
+              <DraggableFlatList
                   contentContainerStyle={{padding: SIZE_5}}
                   data={data}
                   renderItem={this.renderItem}
-                  inverted
+                  // inverted
                   keyExtractor={(item, index) => item.id}
+                  onDragEnd={({ data }) => this.setState({ data })}
               />
            </MenuProvider>
             {!showSearch ? this.renderFooter() : false}

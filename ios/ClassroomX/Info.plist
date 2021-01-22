@@ -2,24 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Your message to user when the camera is accessed for the first time</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Your message to user when the microphone is accessed for the first time</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>ClassroomX</string>
+	<string>Sidebrain</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -34,43 +20,35 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-  
-  
 	<key>CFBundleURLTypes</key>
 	<array>
-    <dict>
-         <key>CFBundleTypeRole</key>
-         <string>Editor</string>
-         <key>CFBundleURLSchemes</key>
-         <array>
-             <string>ShareMedia</string>
-         </array>
-     </dict>
-    <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb4901209176586152</string>
-      </array>
-    </dict>
-    
-    <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>com.googleusercontent.apps.258964835294-i53i7573hb90f4r7a2at8e9qk20talnb</string>
-      </array>
-    </dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ShareMedia</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb4901209176586152</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.258964835294-i53i7573hb90f4r7a2at8e9qk20talnb</string>
+			</array>
+		</dict>
 	</array>
-  
-  
-  <key>FacebookAppID</key>
-  <string>4901209176586152</string>
-  <key>FacebookDisplayName</key>
-  <string>Sidebrain</string>
-  
-  
-  
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>4901209176586152</string>
+	<key>FacebookDisplayName</key>
+	<string>Sidebrain</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -84,8 +62,29 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
+      <key>3.138.184.38</key>
+      <dict>
+        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+        <true/>
+      </dict>
+      
 		</dict>
+    
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Your message to user when the camera is accessed for the first time</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your message to user when the photo library is accessed for the first time</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your message to user when the photo library is accessed for the first time</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your message to user when the photo library is accessed for the first time</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Your message to user when the microphone is accessed for the first time</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Your message to user when the photo library is accessed for the first time</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Your message to user when the photo library is accessed for the first time</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-Pro-Display-Regular.otf</string>

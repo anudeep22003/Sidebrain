@@ -192,24 +192,30 @@ class ChatCard extends PureComponent {
     }
 
     render() {
-        const {data} = this.props
+        const {data, move, moveEnd} = this.props
         const {data: {coords, uri}, type} = data
         const {containerStyle, innerContainerStyle, topContainerStyle, locationTextStyle, waveStyle} = styles
         const {urlMetadata} = this.state
     
+        console.log("called");
         return(
-            <View style={containerStyle} >
-                <View style={topContainerStyle} >
-                    <Image source={require('../../assets/images/location.png')} />
-                <Text style={locationTextStyle} >{coords}</Text>
+            <TouchableOpacity 
+                onLongPress={move}
+                onPressOut={moveEnd}
+            >
+                <View style={containerStyle} >
+                    <View style={topContainerStyle} >
+                        <Image source={require('../../assets/images/location.png')} />
+                    <Text style={locationTextStyle} >{coords}</Text>
+                    </View>
+                    <View style={[innerContainerStyle, (type == AUDIO || type == VIDEO || type == IMAGE) ? {paddingBottom: 30} : {}]} >
+                        {this.getCardData(data, urlMetadata)}
+                    </View>
+                    <View style={{position: 'absolute', bottom: type == LINK ? 18 : 12, right: 10}} >
+                        {this.renderMenuItem()}
+                    </View>
                 </View>
-                <View style={[innerContainerStyle, (type == AUDIO || type == VIDEO || type == IMAGE) ? {paddingBottom: 30} : {}]} >
-                    {this.getCardData(data, urlMetadata)}
-                </View>
-                <View style={{position: 'absolute', bottom: type == LINK ? 18 : 12, right: 10}} >
-                    {this.renderMenuItem()}
-                </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
